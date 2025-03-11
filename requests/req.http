@@ -1,0 +1,8 @@
+PUT http://127.0.0.1:3000/api/products
+Content-Type: application/json; charset=utf-8
+
+
+{
+  "name": "test",
+  "price": 999
+}
