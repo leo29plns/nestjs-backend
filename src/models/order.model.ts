@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { IProduct } from './product.model';
+import { Injectable } from '@nestjs/common';
 
 @Entity()
-export class CommandEntity {
+export class OrderEntity {
   @PrimaryGeneratedColumn()
   id: string;
 
@@ -23,4 +24,9 @@ export class CommandEntity {
 
   @Column()
   product: Array<IProduct>;
+}
+
+@Injectable()
+export class OrderModel {
+  constructor() {}
 }

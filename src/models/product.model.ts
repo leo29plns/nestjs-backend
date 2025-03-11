@@ -1,4 +1,16 @@
+import { Injectable } from '@nestjs/common';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+export interface IProduct {
+  id: string;
+  sellerId: string;
+  name: string;
+  qty: number;
+  price: number;
+  tax: number;
+  description: string;
+  minimumAge: number;
+}
 
 @Entity()
 export class ProductEntity implements IProduct {
@@ -27,8 +39,7 @@ export class ProductEntity implements IProduct {
   minimumAge: number;
 }
 
-export interface IProduct {
-  id: string;
-  qty: number;
-  price: number;
+@Injectable()
+export class ProductModel {
+  constructor() {}
 }

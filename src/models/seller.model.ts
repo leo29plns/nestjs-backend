@@ -1,5 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { UserEntity } from './user.model';
+import { Injectable } from '@nestjs/common';
 
 @Entity()
 export class SellerEntity extends UserEntity {
@@ -11,4 +12,9 @@ export class SellerEntity extends UserEntity {
 
   @Column()
   productTypeId: string;
+}
+
+@Injectable()
+export class SellerModel {
+  constructor() {}
 }

@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -19,4 +20,9 @@ export class UserEntity {
 
   @Column()
   birthDate: Date;
+}
+
+@Injectable()
+export class UserModel {
+  constructor() {}
 }
