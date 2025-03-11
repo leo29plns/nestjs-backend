@@ -16,5 +16,5 @@ export class SellerEntity extends UserEntity {
 
 @Injectable()
 export class SellerModel {
-  constructor() {}
+  constructor(private sellerEntity: SellerEntity) {}
 }

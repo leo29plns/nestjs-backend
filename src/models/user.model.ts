@@ -24,5 +24,5 @@ export class UserEntity {
 
 @Injectable()
 export class UserModel {
-  constructor() {}
+  constructor(private userEntity: UserEntity) {}
 }

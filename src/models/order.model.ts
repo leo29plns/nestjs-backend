@@ -28,5 +28,5 @@ export class OrderEntity {
 
 @Injectable()
 export class OrderModel {
-  constructor() {}
+  constructor(private orderEntity: OrderEntity) {}
 }

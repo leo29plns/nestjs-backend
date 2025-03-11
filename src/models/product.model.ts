@@ -41,5 +41,5 @@ export class ProductEntity implements IProduct {
 
 @Injectable()
 export class ProductModel {
-  constructor() {}
+  constructor(private productEntity: ProductEntity) {}
 }

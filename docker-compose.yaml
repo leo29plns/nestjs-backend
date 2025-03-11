@@ -5,11 +5,6 @@ services:
     hostname: mongodb
     volumes:
       - mongo:/data/db/
-    env_file:
-      - .env.dev
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       - 27017:27017
     networks:
@@ -19,8 +14,6 @@ services:
     image: mongo-express:1.0.2
     restart: always
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DB_USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DB_PASSWORD}
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_BASICAUTH: false

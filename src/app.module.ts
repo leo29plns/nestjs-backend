@@ -6,11 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath: '.env.dev',
-    }),
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@127.0.0.1:27017/backend?authSource=admin`,
+      `mongodb://127.0.0.1:27017/backend?authSource=admin`,
     ),
   ],
   controllers: [ProductsController],
