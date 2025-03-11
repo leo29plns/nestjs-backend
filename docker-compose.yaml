@@ -1,26 +1,37 @@
 ---
 services:
   mongo:
-    image: mongo:8.0.5
-    hostname: mongodb
+    image: mongo:8.0.4-noble
+    restart: always
+    networks:
+      mongo:
+    env_file:
+      - .env.dev
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: backend
     volumes:
-      - mongo:/data/db/
+      - mongo:/data/db
     ports:
       - 27017:27017
-    networks:
-      - mongo
 
   mongo-express:
     image: mongo-express:1.0.2
     restart: always
+    env_file:
+      - .env.dev
     environment:
+      ME_CONFIG_MONGODB_AUTH_USERNAME: ${DB_USERNAME}
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: ${DB_PASSWORD}
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
       ME_CONFIG_MONGODB_PORT: 27017
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_BASICAUTH: false
     ports:
       - 8081:8081
     networks:
-      - mongo
+      mongo:
     depends_on:
       - mongo
 
