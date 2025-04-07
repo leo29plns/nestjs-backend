@@ -1,17 +1,28 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsMongoId } from 'class-validator';
+import { ObjectId } from 'mongoose';
+import { IProduct } from 'src/interfaces/IProduct';
 
-export class IProductsDTO {
-  @IsString()
+export class ProductDTO implements IProduct {
   @IsOptional()
-  id?: string;
+  @IsMongoId()
+  _id?: ObjectId;
+
+  @IsString()
+  sellerId: string;
 
   @IsString()
   name: string;
 
-  @IsString()
-  @IsOptional()
-  description?: string;
+  @IsNumber()
+  qty: number;
 
   @IsNumber()
   price: number;
+
+  @IsNumber()
+  tax: number;
+
+  @IsString()
+  @IsOptional()
+  description?: string;
 }

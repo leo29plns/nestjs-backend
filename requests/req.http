@@ -1,8 +1,32 @@
+### Create a product
 PUT http://127.0.0.1:3000/api/products
 Content-Type: application/json; charset=utf-8
 
+{
+  "sellerId": "3",
+  "name": "leo@leo.fr",
+  "qty": 3,
+  "price": 29,
+  "tax": 3
+}
+
+### Get one product
+
+GET http://127.0.0.1:3000/api/products/67f3985d54b29ba5cb7d301d
+
+### Update one product
+
+PUT http://127.0.0.1:3000/api/products/67f3985d54b29ba5cb7d301d
+Content-Type: application/json; charset=utf-8
 
 {
-  "name": "test",
-  "price": 999
+  "sellerId": "3",
+  "name": "leo@leo.fr",
+  "qty": 29,
+  "price": 29,
+  "tax": 3
 }
+
+### Delete one product
+
+DELETE http://127.0.0.1:3000/api/products/67f3985d54b29ba5cb7d301d

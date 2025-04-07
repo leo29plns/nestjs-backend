@@ -1,17 +1,23 @@
 import { Module } from '@nestjs/common';
 import { ProductsController } from './controllers/products.controller';
 import { ProductsService } from './services/products.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ProductSchema } from './schemas/product.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.dev'],
     }),
-    MongooseModule.forRoot(
-      `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@127.0.0.1:27017/backend?authSource=admin`,
-    ),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: `mongodb://${configService.get('MONGO_USERNAME', 'backend')}:${configService.get('MONGO_PASSWORD')}@${configService.get('MONGO_HOSTNAME', '127.0.0.1')}:${configService.get('MONGO_PORT', '27017')}/${configService.get('MONGO_DATABASE', 'backend')}?authSource=admin`,
+      }),
+    }),
+    MongooseModule.forFeature([{ name: 'Product', schema: ProductSchema }]),
   ],
   controllers: [ProductsController],
   providers: [ProductsService],

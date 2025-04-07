@@ -1,16 +1,53 @@
-import { Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-import { IProductsDTO } from 'src/dto/products.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { plainToClass } from 'class-transformer';
+import { Model } from 'mongoose';
+import { ProductDTO } from 'src/dto/products.dto';
+import { Product } from 'src/schemas/product.schema';
 
 @Injectable()
 export class ProductsService {
-  createProduct(product: IProductsDTO): IProductsDTO {
-    const newProduct: IProductsDTO = {
-      ...product,
-    };
+  constructor(
+    @InjectModel('Product') private readonly productModel: Model<Product>,
+  ) {}
 
-    newProduct.id = randomUUID();
+  async create(product: ProductDTO): Promise<ProductDTO> {
+    const newProduct = await this.productModel.create(product);
 
-    return newProduct;
+    return plainToClass(ProductDTO, newProduct.toObject());
+  }
+
+  async delete(id: string): Promise<ProductDTO> {
+    const deletedProduct = await this.productModel.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return plainToClass(ProductDTO, deletedProduct.toObject());
+  }
+
+  async update(id: string, product: ProductDTO): Promise<ProductDTO> {
+    const updatedProduct = await this.productModel.findByIdAndUpdate(
+      id,
+      product,
+      { new: true },
+    );
+
+    if (!updatedProduct) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return plainToClass(ProductDTO, updatedProduct.toObject());
+  }
+
+  async findById(id: string): Promise<ProductDTO> {
+    const product = await this.productModel.findById(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return plainToClass(ProductDTO, product.toObject());
   }
 }
