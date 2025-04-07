@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToClass } from 'class-transformer';
-import { Model } from 'mongoose';
+import { Model, ObjectId } from 'mongoose';
 import { ProductDTO } from 'src/dto/products.dto';
 import { Product } from 'src/schemas/product.schema';
 
@@ -17,7 +17,7 @@ export class ProductsService {
     return plainToClass(ProductDTO, newProduct.toObject());
   }
 
-  async delete(id: string): Promise<ProductDTO> {
+  async delete(id: ObjectId): Promise<ProductDTO> {
     const deletedProduct = await this.productModel.findByIdAndDelete(id);
 
     if (!deletedProduct) {
@@ -27,7 +27,7 @@ export class ProductsService {
     return plainToClass(ProductDTO, deletedProduct.toObject());
   }
 
-  async update(id: string, product: ProductDTO): Promise<ProductDTO> {
+  async update(id: ObjectId, product: ProductDTO): Promise<ProductDTO> {
     const updatedProduct = await this.productModel.findByIdAndUpdate(
       id,
       product,
@@ -41,7 +41,7 @@ export class ProductsService {
     return plainToClass(ProductDTO, updatedProduct.toObject());
   }
 
-  async findById(id: string): Promise<ProductDTO> {
+  async findById(id: ObjectId): Promise<ProductDTO> {
     const product = await this.productModel.findById(id);
 
     if (!product) {
