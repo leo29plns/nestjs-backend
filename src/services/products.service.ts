@@ -21,7 +21,7 @@ export class ProductsService {
     const deletedProduct = await this.productModel.findByIdAndDelete(id);
 
     if (!deletedProduct) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException();
     }
 
     return plainToClass(ProductDTO, deletedProduct.toObject());
@@ -35,7 +35,7 @@ export class ProductsService {
     );
 
     if (!updatedProduct) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException();
     }
 
     return plainToClass(ProductDTO, updatedProduct.toObject());
@@ -45,7 +45,7 @@ export class ProductsService {
     const product = await this.productModel.findById(id);
 
     if (!product) {
-      throw new NotFoundException('Product not found');
+      throw new NotFoundException();
     }
 
     return plainToClass(ProductDTO, product.toObject());
