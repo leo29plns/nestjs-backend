@@ -39,4 +39,12 @@ export class ProductsController {
   async findById(@Param('id', MongoIdPipe) id: ObjectId): Promise<ProductDTO> {
     return this.productsService.findById(id);
   }
+
+  @Get()
+  async findAll(
+    @Param('lastId', MongoIdPipe) lastId: ObjectId,
+    @Param('limit') limit: number,
+  ): Promise<ProductDTO[]> {
+    return this.productsService.findAll(lastId, limit);
+  }
 }

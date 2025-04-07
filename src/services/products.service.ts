@@ -50,4 +50,18 @@ export class ProductsService {
 
     return plainToClass(ProductDTO, product.toObject());
   }
+
+  async findAll(lastId?: ObjectId, limit: number = 10): Promise<ProductDTO[]> {
+    const filters = lastId ? { _id: { $lt: lastId } } : {};
+
+    const products = await this.productModel
+      .find(filters)
+      .sort({ _id: -1 })
+      .limit(limit)
+      .exec();
+
+    return products.map((product) =>
+      plainToClass(ProductDTO, product.toObject()),
+    );
+  }
 }
